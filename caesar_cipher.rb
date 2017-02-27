@@ -1,13 +1,16 @@
 def caesar_cipher(string, shift_factor)
-  new_string = ""
+  new_string   = ""
+  letter_bytes = (65..122).to_a
+
   string.each_byte do |character|
-    new_character = if character == 32 # An empty space.
-                      character
-                    else
+    new_character = if letter_bytes.include?(character)
                       character + shift_factor
+                    else
+                      character
                     end
     new_string << new_character.chr
   end
+
   puts new_string
 end
 
