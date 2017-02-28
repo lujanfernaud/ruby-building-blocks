@@ -1,15 +1,19 @@
 def caesar_cipher(string, shift_factor)
   new_string      = ""
-  character_bytes = (65..90).to_a + (97..122).to_a
+  # Characters in range 65..90 are lowercase and in range 97..122 are uppercase.
+  character_bytes = [(65..90).to_a, (97..122).to_a]
 
   string.each_byte do |character|
-    new_character = if character_bytes.include?(character)
-                      character_position      = character_bytes.index(character)
-                      character_bytes_rotated = character_bytes.rotate(shift_factor)
-                      character_bytes_rotated[character_position]
-                    else
-                      character
-                    end
+    # Select only the sub array that contains 'character' to keep the same case.
+    character_array = character_bytes.select { |sub_array| sub_array.include?(character) }.flatten
+    new_character   = if !character_array.empty?
+                        character_position      = character_array.index(character)
+                        character_array_rotated = character_array.rotate(shift_factor)
+                        character_array_rotated[character_position]
+                      # If the array is empty 'character' is not a letter.
+                      else
+                        character
+                      end
     new_string << new_character.chr
   end
 
@@ -31,7 +35,7 @@ while true
     user_text = gets.chomp
 
     puts "\n"
-    puts "Please introduce the shift factor (Ex: 3):"
+    puts "Please introduce the shift factor (for example, 3):"
     user_shift = gets.chomp.to_i
 
     puts "\n"
@@ -44,7 +48,7 @@ while true
     user_says = gets.chomp.downcase
   else
     system "clear" or system "cls"
-    puts "Hope you liked it!"
+    puts "Thanks for testing it. Hope you liked it!"
     puts "\n"
     break
   end
