@@ -21,6 +21,12 @@ user_says = "yes"
 while true
   if user_says == "yes"
     system "clear" or system "cls"
+    puts "###################"
+    puts "#                 #"
+    puts "#  CAESAR CIPHER  #"
+    puts "#                 #"
+    puts "###################"
+    puts "\n"
     puts "Please introduce some text:"
     user_text = gets.chomp
 
@@ -39,6 +45,7 @@ while true
   else
     system "clear" or system "cls"
     puts "Hope you liked it!"
+    puts "\n"
     break
   end
 end
