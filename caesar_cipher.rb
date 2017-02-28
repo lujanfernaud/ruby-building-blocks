@@ -1,3 +1,9 @@
+# Project: Caesar Cipher for The Odin Project
+# Author: Luján Fernaud
+#
+# Instructions: Implement a caesar cipher that takes in a string and the shift factor
+# and then outputs the modified string. Don't forget to keep the same case.
+
 def caesar_cipher(string, shift_factor)
   new_string      = ""
   # Characters in range 65..90 are lowercase and in range 97..122 are uppercase.
