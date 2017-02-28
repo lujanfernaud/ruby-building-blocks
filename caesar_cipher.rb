@@ -4,7 +4,9 @@ def caesar_cipher(string, shift_factor)
 
   string.each_byte do |character|
     new_character = if letter_bytes.include?(character)
-                      character + shift_factor
+                      character_position   = letter_bytes.index(character)
+                      letter_bytes_rotated = letter_bytes.rotate(shift_factor)
+                      letter_bytes_rotated[character_position]
                     else
                       character
                     end
