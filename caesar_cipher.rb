@@ -1,12 +1,12 @@
 def caesar_cipher(string, shift_factor)
-  new_string   = ""
-  letter_bytes = (65..122).to_a
+  new_string      = ""
+  character_bytes = (65..122).to_a
 
   string.each_byte do |character|
-    new_character = if letter_bytes.include?(character)
-                      character_position   = letter_bytes.index(character)
-                      letter_bytes_rotated = letter_bytes.rotate(shift_factor)
-                      letter_bytes_rotated[character_position]
+    new_character = if character_bytes.include?(character)
+                      character_position      = character_bytes.index(character)
+                      character_bytes_rotated = character_bytes.rotate(shift_factor)
+                      character_bytes_rotated[character_position]
                     else
                       character
                     end
