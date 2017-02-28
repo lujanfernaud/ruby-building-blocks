@@ -1,6 +1,6 @@
 def caesar_cipher(string, shift_factor)
   new_string      = ""
-  character_bytes = (65..122).to_a
+  character_bytes = (65..90).to_a + (97..122).to_a
 
   string.each_byte do |character|
     new_character = if character_bytes.include?(character)
