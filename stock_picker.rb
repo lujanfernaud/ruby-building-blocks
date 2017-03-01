@@ -23,14 +23,16 @@ def stock_picker(stock_prices)
 
   minimum_price = new_stock_prices.min
 
-  puts "Best day to buy: #{stock_prices.index(minimum_price)} ($#{minimum_price})"
-  puts "Best day to sell: #{stock_prices.index(maximum_price)} ($#{maximum_price})"
-  puts "Profit: $#{maximum_price - minimum_price}"
+  puts "\n"
+  print "Stock prices: #{stock_prices}"
+  puts "\n\n"
+  puts "Best day to buy:" + "#{stock_prices.index(minimum_price)}".rjust(6) + "($#{minimum_price})".rjust(6)
+  puts "Best day to sell:" + "#{stock_prices.index(maximum_price)}".rjust(5) + "($#{maximum_price})".rjust(6)
+  puts "-" * 28
+  puts "Profit:" + "$#{maximum_price - minimum_price}".rjust(20)
 end
 
-p [17, 3, 6, 9, 15, 8, 6, 1, 10]
 stock_picker([17, 3, 6, 9, 15, 8, 6, 1, 10])
 
-random_array = (2..40).to_a.shuffle
-p random_array
+random_array = (1..31).to_a.shuffle
 stock_picker(random_array)
