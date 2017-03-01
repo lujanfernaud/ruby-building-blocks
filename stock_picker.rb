@@ -11,9 +11,7 @@
 def stock_picker(stock_prices)
   new_stock_prices = stock_prices.dup
 
-  while new_stock_prices.max == new_stock_prices[0]
-    new_stock_prices.shift
-  end
+  new_stock_prices.shift while new_stock_prices.max == new_stock_prices[0]
 
   maximum_price = new_stock_prices.max
   maximum_price_index = new_stock_prices.index(maximum_price)
