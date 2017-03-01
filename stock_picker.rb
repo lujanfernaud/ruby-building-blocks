@@ -23,6 +23,10 @@ def stock_picker(stock_prices)
 
   minimum_price = new_stock_prices.min
 
+  print_output(stock_prices, minimum_price, maximum_price)
+end
+
+def print_output(stock_prices, minimum_price, maximum_price)
   puts "\n"
   print "Stock prices: #{stock_prices}"
   puts "\n\n"
