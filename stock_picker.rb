@@ -42,7 +42,15 @@ def days_and_prices(stock_prices)
   puts "Price:" + prices.rjust(prices.length + 2)
 end
 
+def random_prices_generator(days)
+  array = []
+  days.times do |n|
+    array << n + 1 * rand(11)
+  end
+  array.shuffle!
+end
+
 stock_picker([17, 3, 6, 9, 15, 8, 6, 1, 10])
 
-random_array = (1..14).to_a.shuffle
-stock_picker(random_array)
+random_prices = random_prices_generator(14)
+stock_picker(random_prices)
