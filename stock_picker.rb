@@ -26,15 +26,23 @@ end
 
 def print_output(stock_prices, minimum_price, maximum_price)
   puts "\n"
-  print "Stock prices: #{stock_prices}"
-  puts "\n\n"
-  puts "Best day to buy:" + "#{stock_prices.index(minimum_price)}".rjust(6) + "($#{minimum_price})".rjust(6)
+  puts days_and_prices(stock_prices)
+  puts "Best day to buy: " + "#{stock_prices.index(minimum_price)}".rjust(5) + "($#{minimum_price})".rjust(6)
   puts "Best day to sell:" + "#{stock_prices.index(maximum_price)}".rjust(5) + "($#{maximum_price})".rjust(6)
   puts "-" * 28
   puts "Profit:" + "$#{maximum_price - minimum_price}".rjust(20)
 end
 
+def days_and_prices(stock_prices)
+  days        = (0..stock_prices.length - 1).to_a
+  days        = days.map { |day| "%2d" % day }.join(" | ")
+  prices      = stock_prices.map { |price| "%2d" % price }.join(" | ")
+
+  puts "Day:  " + days.rjust(days.length + 2)
+  puts "Price:" + prices.rjust(prices.length + 2)
+end
+
 stock_picker([17, 3, 6, 9, 15, 8, 6, 1, 10])
 
-random_array = (1..31).to_a.shuffle
+random_array = (1..14).to_a.shuffle
 stock_picker(random_array)
