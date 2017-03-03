@@ -9,17 +9,36 @@
 # => [1,4]  # for a profit of $15 - $3 == $12
 
 def stock_picker(stock_prices)
-  new_stock_prices = stock_prices.dup
+  stock_prices_copy = stock_prices.dup
+  days_and_profit   = []
+  profits           = []
 
-  new_stock_prices.shift while new_stock_prices.max == new_stock_prices[0]
+  stock_prices_copy.each_with_index do |price1, index1|
+    stock_prices.each_with_index do |price2, index2|
+      # Jump to next iteration if the index of the second price is smaller or
+      # equal than the index of the first price. We are only interested in
+      # left to right comparisons (ex: day 2 compared to day 4).
+      next if index2 < index1 || index2 == index1
 
-  maximum_price = new_stock_prices.max
-  maximum_price_index = new_stock_prices.index(maximum_price)
+      profit = price2 - price1
+      next if profit < 0
 
-  # Delete array from maximum value on.
-  new_stock_prices.map!.with_index { |price, index| price if index <= maximum_price_index }.compact!
+      # Only save pairs with profits bigger than the ones that are already in the array.
+      if days_and_profit.empty? || profit > days_and_profit[-1][2]
+        days_and_profit << [stock_prices_copy.index(price1), stock_prices.index(price2), profit]
+      end
+    end
+  end
 
-  minimum_price = new_stock_prices.min
+  # Send the profits to an array to choose the highest.
+  days_and_profit.each do |sub_array|
+    sub_array.each_with_index { |value, index| profits << value if index == 2}
+  end
+
+  highest_profit_index = profits.index(profits.max)
+  chosen_days          = days_and_profit[highest_profit_index]
+  minimum_price        = stock_prices[chosen_days[0]]
+  maximum_price        = stock_prices[chosen_days[1]]
 
   print_output(stock_prices, minimum_price, maximum_price)
 end
@@ -45,7 +64,7 @@ end
 def random_prices_generator(days)
   array = []
   days.times do |n|
-    array << n + 1 * rand(11)
+    array << (n + 1) * rand(1..3)
   end
   array.shuffle!
 end
