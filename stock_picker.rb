@@ -19,7 +19,6 @@ def stock_picker(stock_prices)
       # equal than the index of the first price. We are only interested in
       # left to right comparisons (ex: day 2 compared to day 4).
       next if index2 < index1 || index2 == index1
-
       profit = price2 - price1
       next if profit < 0
 
@@ -35,41 +34,31 @@ def stock_picker(stock_prices)
     sub_array.each_with_index { |value, index| profits << value if index == 2}
   end
 
-  highest_profit_index = profits.index(profits.max)
-  chosen_days          = days_and_profit[highest_profit_index]
-  minimum_price        = stock_prices[chosen_days[0]]
-  maximum_price        = stock_prices[chosen_days[1]]
+  highest_profit = profits.index(profits.max)
+  chosen_days    = days_and_profit[highest_profit]
+  minimum_price  = stock_prices[chosen_days[0]]
+  maximum_price  = stock_prices[chosen_days[1]]
 
   print_output(stock_prices, minimum_price, maximum_price)
 end
 
 def print_output(stock_prices, minimum_price, maximum_price)
+  days   = (0..stock_prices.size - 1).map { |day| "%2d" % day }.join(" | ")
+  prices = stock_prices.map { |price| "%2d" % price }.join(" | ")
+
   puts "\n"
-  puts days_and_prices(stock_prices)
+  puts "Day:  " + days.rjust(days.size + 2)
+  puts "-" * (days.size + 10)
+  puts "Price:" + prices.rjust(prices.size + 2)
+  puts "\n"
   puts "Best day to buy: " + "#{stock_prices.index(minimum_price)}".rjust(5) + "($#{minimum_price})".rjust(6)
   puts "Best day to sell:" + "#{stock_prices.index(maximum_price)}".rjust(5) + "($#{maximum_price})".rjust(6)
   puts "-" * 28
   puts "Profit:" + "$#{maximum_price - minimum_price}".rjust(20)
 end
 
-def days_and_prices(stock_prices)
-  days        = (0..stock_prices.length - 1).to_a
-  days        = days.map { |day| "%2d" % day }.join(" | ")
-  prices      = stock_prices.map { |price| "%2d" % price }.join(" | ")
-
-  puts "Day:  " + days.rjust(days.length + 2)
-  puts "Price:" + prices.rjust(prices.length + 2)
-end
-
 def random_prices_generator(days)
-  array = []
-  days.times do |n|
-    array << (n + 1) * rand(1..3)
-  end
-  array.shuffle!
+  Array.new(days) { rand(1..21) }
 end
 
-stock_picker([17, 3, 6, 9, 15, 8, 6, 1, 10])
-
-random_prices = random_prices_generator(14)
-stock_picker(random_prices)
+stock_picker(random_prices_generator(14))
