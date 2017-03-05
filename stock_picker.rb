@@ -8,6 +8,20 @@
 # > stock_picker([17,3,6,9,15,8,6,1,10])
 # => [1,4]  # for a profit of $15 - $3 == $12
 
+# Syntactic sugar.
+class Array
+  def still_empty?
+    empty?
+  end
+end
+
+# Syntactic sugar.
+class Integer
+  def negative?
+    self < 0
+  end
+end
+
 def stock_picker(stock_prices)
   stock_prices_copy = stock_prices.dup
   days_and_profit   = []
@@ -18,9 +32,9 @@ def stock_picker(stock_prices)
       # Jump to next iteration if the index of the second price is smaller or
       # equal than the index of the first price. We are only interested in
       # left to right comparisons (ex: day 2 compared to day 4).
-      next if index2 < index1 || index2 == index1
+      next if index2 <= index1
       profit = price2 - price1
-      next if profit < 0
+      next if profit.negative?
 
       # Only save pairs with profits bigger than the ones that are already in the array.
       if days_and_profit.empty? || profit > days_and_profit[-1][2]
@@ -29,7 +43,7 @@ def stock_picker(stock_prices)
     end
   end
 
-  if days_and_profit.empty?
+  if days_and_profit.still_empty?
     clear_screen
     puts "There's no possible profit for the list: #{stock_prices.join(", ")}"
     puts "\n"
@@ -68,7 +82,7 @@ def check_user_input(user_input)
   user_input_array = user_input.scan(/\d+/).map { |n| n.to_i }
 
   if user_input == "gen"
-    stock_picker(random_prices_generator(14))
+    stock_picker(random_prices_generator)
   elsif user_input_array.empty?
     clear_screen
     puts "Please introduce a list of numbers sepparated by commas (for example: 17, 3, 6, 9, 15, 8, 6, 1, 10):"
@@ -84,8 +98,8 @@ def check_user_input(user_input)
   end
 end
 
-def random_prices_generator(days)
-  Array.new(days) { rand(1..21) }
+def random_prices_generator
+  Array.new(14) { rand(1..21) }
 end
 
 def clear_screen
