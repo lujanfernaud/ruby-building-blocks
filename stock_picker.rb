@@ -46,7 +46,6 @@ def print_output(stock_prices, minimum_price, maximum_price)
   days   = (0..stock_prices.size - 1).map { |day| "%2d" % day }.join(" | ")
   prices = stock_prices.map { |price| "%2d" % price }.join(" | ")
 
-  puts "\n"
   puts "Day:  " + days.rjust(days.size + 2)
   puts "-" * (days.size + 10)
   puts "Price:" + prices.rjust(prices.size + 2)
@@ -61,4 +60,35 @@ def random_prices_generator(days)
   Array.new(days) { rand(1..21) }
 end
 
-stock_picker(random_prices_generator(14))
+user_says = "yes"
+
+while true
+  if user_says == "yes"
+    system "clear" or system "cls"
+    puts "##################"
+    puts "#                #"
+    puts "#  STOCK PICKER  #"
+    puts "#                #"
+    puts "##################"
+    puts "\n"
+    puts "Please type 'gen' if you want to generate random prices."
+    puts "Otherwise, introduce a list of prices (for example: 17, 3, 6, 9, 15, 8, 6, 1, 10):"
+    user_input = gets.chomp
+
+    system "clear" or system "cls"
+    if user_input == "gen"
+      stock_picker(random_prices_generator(14))
+    else
+      stock_picker(user_input.split(/\,\s*/).map { |n| n.to_i })
+    end
+
+    puts "\n"
+    puts "Would you like to try again? (yes/no)"
+    user_says = gets.chomp.downcase
+  else
+    system "clear" or system "cls"
+    puts "Thanks for testing it. Hope you liked it!"
+    puts "\n"
+    break
+  end
+end
