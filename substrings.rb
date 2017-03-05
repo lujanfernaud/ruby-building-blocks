@@ -6,15 +6,18 @@
 # argument. It should return a hash listing each substring (case insensitive)
 # that was found in the original string and how many times it was found.
 
-def substrings(word, dictionary)
+def substrings(string, dictionary)
   hash = {}
+  string_array = string.scan(/\w+/)
 
-  dictionary.each do |w|
-    next if word.scan(w).empty?
-    if hash.include?(w)
-      hash[w] += 1
-    else
-      hash[w] = 1
+  string_array.each do |word|
+    dictionary.each do |w|
+      next if word.downcase.scan(w).empty?
+      if hash.include?(w)
+        hash[w] += 1
+      else
+        hash[w] = 1
+      end
     end
   end
 
@@ -25,3 +28,4 @@ dictionary = ["below", "down", "go", "going", "horn", "how", "howdy", "it", "i",
               "low", "own", "part", "partner", "sit"]
 
 substrings("below", dictionary)
+substrings("Howdy partner, sit down! How's it going?", dictionary)
