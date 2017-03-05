@@ -46,6 +46,7 @@ def print_output(stock_prices, minimum_price, maximum_price)
   days   = (0..stock_prices.size - 1).map { |day| "%2d" % day }.join(" | ")
   prices = stock_prices.map { |price| "%2d" % price }.join(" | ")
 
+  clear_screen
   puts "Day:  " + days.rjust(days.size + 2)
   puts "-" * (days.size + 10)
   puts "Price:" + prices.rjust(prices.size + 2)
@@ -56,37 +57,57 @@ def print_output(stock_prices, minimum_price, maximum_price)
   puts "Profit:" + "$#{maximum_price - minimum_price}".rjust(20)
 end
 
+def check_user_input(user_input)
+  user_input_array = user_input.scan(/\d+/).map { |n| n.to_i }
+
+  if user_input == "gen"
+    stock_picker(random_prices_generator(14))
+  elsif user_input_array.empty?
+    clear_screen
+    puts "Please introduce a list of numbers sepparated by commas (for example: 17, 3, 6, 9, 15, 8, 6, 1, 10):"
+    user_input = gets.chomp
+    check_user_input(user_input)
+  elsif user_input_array.size < 2
+    clear_screen
+    puts "Please introduce 2 numbers or more:"
+    user_input = gets.chomp
+    check_user_input(user_input)
+  else
+    stock_picker(user_input_array)
+  end
+end
+
 def random_prices_generator(days)
   Array.new(days) { rand(1..21) }
 end
 
+def clear_screen
+  system "clear" or system "cls"
+end
+
 user_says = "yes"
 
-while true
+loop do
   if user_says == "yes"
-    system "clear" or system "cls"
+    clear_screen
     puts "##################"
     puts "#                #"
     puts "#  STOCK PICKER  #"
     puts "#                #"
     puts "##################"
     puts "\n"
-    puts "Please type 'gen' if you want to generate random prices."
-    puts "Otherwise, introduce a list of prices (for example: 17, 3, 6, 9, 15, 8, 6, 1, 10):"
+    puts "Please introduce a list of prices (for example: 17, 3, 6, 9, 15, 8, 6, 1, 10):"
+    puts "(You can also type 'gen' to generate random prices.)"
     user_input = gets.chomp
 
-    system "clear" or system "cls"
-    if user_input == "gen"
-      stock_picker(random_prices_generator(14))
-    else
-      stock_picker(user_input.split(/\,\s*/).map { |n| n.to_i })
-    end
+    clear_screen
+    check_user_input(user_input)
 
     puts "\n"
     puts "Would you like to try again? (yes/no)"
     user_says = gets.chomp.downcase
   else
-    system "clear" or system "cls"
+    clear_screen
     puts "Thanks for testing it. Hope you liked it!"
     puts "\n"
     break
