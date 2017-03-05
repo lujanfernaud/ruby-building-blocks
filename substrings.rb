@@ -17,6 +17,10 @@ def substrings(string, dictionary)
     end
   end
 
+  print_output(string, hash)
+end
+
+def print_output(string, hash)
   sorted_hash = hash.sort_by { |_word, count| count }.reverse
   system "clear" or "cls"
   puts "Input: #{string}\n\n"
