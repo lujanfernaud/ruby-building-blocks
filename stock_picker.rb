@@ -29,6 +29,13 @@ def stock_picker(stock_prices)
     end
   end
 
+  if days_and_profit.empty?
+    clear_screen
+    puts "There's no possible profit for the list: #{stock_prices.join(", ")}"
+    puts "\n"
+    exit
+  end
+
   # Send the profits to an array to choose the highest.
   days_and_profit.each do |sub_array|
     sub_array.each_with_index { |value, index| profits << value if index == 2}
