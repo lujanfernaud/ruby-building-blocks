@@ -28,7 +28,7 @@ end
 
 user_says = "yes"
 
-while true
+loop do
   if user_says == "yes"
     system "clear" or system "cls"
     puts "###################"
