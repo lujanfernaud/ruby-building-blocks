@@ -41,6 +41,28 @@ def bubble_sort(array)
   puts "Final array:   #{array}"
 end
 
+def bubble_sort_by(array)
+  array.size.times do |i|
+    last_value = i > 0 ? i * -1 : -1
+
+    array[0..last_value].each.with_index do |_value, index|
+      break if index == array.size - 1
+
+      a = array[index]
+      b = array[index + 1]
+
+      next if yield(a, b)
+
+      array[index] = b
+      array[index + 1] = a
+
+      print_output(array, index)
+    end
+  end
+
+  puts "Final array: #{array}"
+end
+
 def print_output(array, a_index)
   array_copy = array.dup
 
@@ -63,4 +85,6 @@ end
 
 # bubble_sort([4, 3, 78, 2, 0, 2])
 
-bubble_sort(random_list)
+# bubble_sort(random_list)
+
+bubble_sort_by([4, 3, 78, 2, 0, 2]) { |a, b| a < b }
