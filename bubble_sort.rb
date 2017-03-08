@@ -21,7 +21,7 @@ def bubble_sort(array)
   puts "Initial array: #{array}"
 
   array.size.times do |i|
-    last_value = i > 0 ? i * -2 : -1
+    last_value = i > 0 ? i * -1 : -1
 
     array[0..last_value].each.with_index do |_value, index|
       break if index == array.size - 1
