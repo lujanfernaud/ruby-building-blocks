@@ -15,3 +15,28 @@
 # than the element on the right. 0 means they are equal. A positive result means
 # the left element is greater. Use this to sort your array.
 
+require 'pry'
+
+def bubble_sort(array)
+  puts "Initial array: #{array}"
+
+  array.size.times do |i|
+    last_value = i > 0 ? i * -2 : -1
+
+    array[0..last_value].each.with_index do |_value, index|
+      break if index == array.size - 1
+
+      a = array[index]
+      b = array[index + 1]
+
+      next if a < b
+
+      array[index] = b
+      array[index + 1] = a
+    end
+  end
+
+  puts "Final array:   #{array}"
+end
+
+bubble_sort([4, 3, 78, 2, 0, 2])
