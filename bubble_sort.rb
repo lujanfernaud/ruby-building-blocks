@@ -33,10 +33,26 @@ def bubble_sort(array)
 
       array[index] = b
       array[index + 1] = a
+
+      print_output(array, index)
     end
   end
 
   puts "Final array:   #{array}"
+end
+
+def print_output(array, a_index)
+  array_copy = array.dup
+
+  array_copy.each.with_index do |value, index|
+    next if index != a_index
+    array_copy[index] = "[#{value}]"
+    system "clear" or system "cls"
+    puts "\n"
+    puts array_copy.join(", ")
+    sleep 0.8
+    puts "\n"
+  end
 end
 
 bubble_sort([4, 3, 78, 2, 0, 2])
