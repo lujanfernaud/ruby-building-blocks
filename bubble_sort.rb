@@ -55,4 +55,12 @@ def print_output(array, a_index)
   end
 end
 
-bubble_sort([4, 3, 78, 2, 0, 2])
+def random_list
+  array = (0..((rand(2..3)) * 5)).to_a.shuffle
+  array.shuffle! if array.sort == array
+  array
+end
+
+# bubble_sort([4, 3, 78, 2, 0, 2])
+
+bubble_sort(random_list)
