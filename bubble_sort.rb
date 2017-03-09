@@ -15,8 +15,6 @@
 # than the element on the right. 0 means they are equal. A positive result means
 # the left element is greater. Use this to sort your array.
 
-require 'pry'
-
 def bubble_sort(array)
   puts "Initial array: #{array}"
 
@@ -51,7 +49,7 @@ def bubble_sort_by(array)
       a = array[index]
       b = array[index + 1]
 
-      next if yield(a, b)
+      next if yield(a.to_s, b.to_s) < 0
 
       array[index] = b
       array[index + 1] = a
@@ -72,7 +70,7 @@ def print_output(array, a_index)
     system "clear" or system "cls"
     puts "\n"
     puts array_copy.join(", ")
-    sleep 0.8
+    sleep 0.4
     puts "\n"
   end
 end
@@ -83,8 +81,8 @@ def random_list
   array
 end
 
-# bubble_sort([4, 3, 78, 2, 0, 2])
+bubble_sort([4, 3, 78, 2, 0, 2])
+# => [0, 2, 2, 3, 4, 78]
 
-# bubble_sort(random_list)
-
-bubble_sort_by([4, 3, 78, 2, 0, 2]) { |a, b| a < b }
+bubble_sort_by(["hi", "hello", "hey"]) { |a, b| a.length - b.length }
+# => ["hi", "hey", "hello"]
