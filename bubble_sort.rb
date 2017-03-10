@@ -16,8 +16,6 @@
 # the left element is greater. Use this to sort your array.
 
 def bubble_sort(array)
-  puts "Initial array: #{array}"
-
   array.size.times do |i|
     last_value = i > 0 ? i * -1 : -1
 
@@ -35,8 +33,6 @@ def bubble_sort(array)
       print_output(array, index)
     end
   end
-
-  puts "Final array:   #{array}"
 end
 
 def bubble_sort_by(array)
@@ -49,7 +45,8 @@ def bubble_sort_by(array)
       a = array[index]
       b = array[index + 1]
 
-      next if yield(a.to_s, b.to_s) < 0
+      next if a.is_a?(String) && b.is_a?(String) && yield(a.to_s, b.to_s) < 0
+      next if a.is_a?(Integer) && b.is_a?(Integer) && yield(a, b) == true
 
       array[index] = b
       array[index + 1] = a
@@ -57,13 +54,10 @@ def bubble_sort_by(array)
       print_output(array, index)
     end
   end
-
-  puts "Final array: #{array}"
 end
 
 def print_output(array, a_index)
   array_copy = array.dup
-
   array_copy.each.with_index do |value, index|
     next if index != a_index
     array_copy[index] = "[#{value}]"
@@ -81,8 +75,10 @@ def random_list
   array
 end
 
-bubble_sort([4, 3, 78, 2, 0, 2])
+# bubble_sort([4, 3, 78, 2, 0, 2])
 # => [0, 2, 2, 3, 4, 78]
 
-bubble_sort_by(["hi", "hello", "hey"]) { |a, b| a.length - b.length }
+# bubble_sort_by(["hi", "hello", "hey"]) { |a, b| a.length - b.length }
 # => ["hi", "hey", "hello"]
+
+bubble_sort_by(random_list) { |a, b| a < b }
