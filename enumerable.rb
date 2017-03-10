@@ -21,6 +21,13 @@ module Enumerable
   end
 
   # 4. Create #my_each_with_index in the same way.
+  def my_each_with_index
+    i = 0
+    while i < size
+      yield self[i], i
+      i += 1
+    end
+  end
 
   # 5. Create #my_select in the same way, though you may use #my_each in your
   # definition (but not #each).
@@ -55,3 +62,4 @@ end
 array = [1, 3, 5, 6, 7, 9, 14, 21]
 
 array.my_each { |n| puts "#{n}!" }
+array.my_each_with_index { |n, i| puts "Number #{n} has index #{i}" }
