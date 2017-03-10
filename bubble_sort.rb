@@ -45,7 +45,7 @@ def bubble_sort_by(array)
       a = array[index]
       b = array[index + 1]
 
-      next if a.is_a?(String) && b.is_a?(String) && yield(a.to_s, b.to_s) < 0
+      next if a.is_a?(String) && b.is_a?(String) && yield(a, b) < 0
       next if a.is_a?(Integer) && b.is_a?(Integer) && yield(a, b) == true
 
       array[index] = b
