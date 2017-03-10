@@ -12,7 +12,13 @@ module Enumerable
   # 3. Create #my_each, a method that is identical to #each but (obviously)
   # does not use #each. You'll need to remember the yield statement. Make sure
   # it returns the same thing as #each as well.
-  def my_each; end
+  def my_each
+    i = 0
+    while i < size
+      yield self[i]
+      i += 1
+    end
+  end
 
   # 4. Create #my_each_with_index in the same way.
 
@@ -45,3 +51,7 @@ module Enumerable
   # will be run first. So if both a proc and a block are given, only execute
   # the proc.
 end
+
+array = [1, 3, 5, 6, 7, 9, 14, 21]
+
+array.my_each { |n| puts "#{n}!" }
