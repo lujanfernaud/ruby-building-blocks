@@ -44,6 +44,10 @@ module Enumerable
   end
 
   # 6. Create #my_all? (continue as above)
+  def my_all?
+    return my_select { |n| yield(n) }.empty? if block_given?
+    my_all? { |n| !n }
+  end
 
   # 7. Create #my_any?
 
@@ -72,29 +76,51 @@ end
 
 array = [1, 3, 5, 6, 7, 9, 14, 21]
 
+puts"\n"
+puts "########################"
+puts "#                      #"
+puts "#  ENUMERABLE METHODS  #"
+puts "#                      #"
+puts "########################"
+puts "\n"
 puts "p array.my_each:"
 p array.my_each { |n| "#{n}!" }
-puts "p array.each:"
+puts "\np array.each:"
 p array.each { |n| "#{n}!" }
 puts "\narray.my_each with puts in block:"
 array.my_each { |n| puts "#{n}!" }
-puts "array.each with puts in block:"
+puts "\narray.each with puts in block:"
 array.each { |n| puts "#{n}!" }
+
+puts "\n------------------------\n"
 
 puts "\np array.my_each_with_index:"
 p array.my_each_with_index { |n, i| "Number #{n} has index #{i}" }
-puts "p array.each_with_index:"
+puts "\np array.each_with_index:"
 p array.each_with_index { |n, i| "Number #{n} has index #{i}" }
 puts "\narray.my_each_with_index with puts in block:"
 array.my_each_with_index { |n, i| puts "Number #{n} has index #{i}" }
-puts "array.each_with_index with puts in block:"
+puts "\narray.each_with_index with puts in block:"
 array.each_with_index { |n, i| puts "Number #{n} has index #{i}" }
+
+puts "\n------------------------\n"
 
 puts "\np array.my_select:"
 p array.my_select { |n| n.odd? }
-puts "p array.select:"
+puts "\np array.select:"
 p array.select { |n| n.odd? }
 puts "\narray.my_select with puts in block:"
 array.my_select { |n| puts n if n.odd? }
-puts "array.select with puts in block:"
+puts "\narray.select with puts in block:"
 array.select { |n| puts n if n.odd? }
+
+puts "\n------------------------\n"
+
+puts "\np array.my_all?:"
+p array.my_all? { |n| n < 9 }
+puts "\np array.all?:"
+p array.all? { |n| n < 9 }
+puts "\np array.my_all? without block:"
+p array.my_all?
+puts "\np array.all? without block:"
+p array.all?
