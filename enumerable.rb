@@ -14,19 +14,25 @@ module Enumerable
   # it returns the same thing as #each as well.
   def my_each
     i = 0
+    array = []
     while i < size
       yield self[i]
+      array << self[i]
       i += 1
     end
+    array
   end
 
   # 4. Create #my_each_with_index in the same way.
   def my_each_with_index
     i = 0
+    array = []
     while i < size
       yield self[i], i
+      array << self[i]
       i += 1
     end
+    array
   end
 
   # 5. Create #my_select in the same way, though you may use #my_each in your
@@ -66,17 +72,29 @@ end
 
 array = [1, 3, 5, 6, 7, 9, 14, 21]
 
-puts "#my_each:"
+puts "p array.my_each:"
+p array.my_each { |n| "#{n}!" }
+puts "p array.each:"
+p array.each { |n| "#{n}!" }
+puts "\narray.my_each with puts in block:"
 array.my_each { |n| puts "#{n}!" }
-puts "#each:"
+puts "array.each with puts in block:"
 array.each { |n| puts "#{n}!" }
 
-puts "\n#my_each_with_index:"
+puts "\np array.my_each_with_index:"
+p array.my_each_with_index { |n, i| "Number #{n} has index #{i}" }
+puts "p array.each_with_index:"
+p array.each_with_index { |n, i| "Number #{n} has index #{i}" }
+puts "\narray.my_each_with_index with puts in block:"
 array.my_each_with_index { |n, i| puts "Number #{n} has index #{i}" }
-puts "#each_with_index:"
+puts "array.each_with_index with puts in block:"
 array.each_with_index { |n, i| puts "Number #{n} has index #{i}" }
 
-puts "\n#my_select"
+puts "\np array.my_select:"
 p array.my_select { |n| n.odd? }
-puts "#select"
+puts "p array.select:"
 p array.select { |n| n.odd? }
+puts "\narray.my_select with puts in block:"
+array.my_select { |n| puts n if n.odd? }
+puts "array.select with puts in block:"
+array.select { |n| puts n if n.odd? }
