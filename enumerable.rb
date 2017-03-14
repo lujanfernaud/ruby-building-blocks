@@ -31,6 +31,11 @@ module Enumerable
 
   # 5. Create #my_select in the same way, though you may use #my_each in your
   # definition (but not #each).
+  def my_select
+    array = []
+    my_each { |n| array.push(n) if yield(n) }
+    array
+  end
 
   # 6. Create #my_all? (continue as above)
 
@@ -61,5 +66,17 @@ end
 
 array = [1, 3, 5, 6, 7, 9, 14, 21]
 
+puts "#my_each:"
 array.my_each { |n| puts "#{n}!" }
+puts "#each:"
+array.each { |n| puts "#{n}!" }
+
+puts "\n#my_each_with_index:"
 array.my_each_with_index { |n, i| puts "Number #{n} has index #{i}" }
+puts "#each_with_index:"
+array.each_with_index { |n, i| puts "Number #{n} has index #{i}" }
+
+puts "\n#my_select"
+p array.my_select { |n| n.odd? }
+puts "#select"
+p array.select { |n| n.odd? }
