@@ -13,6 +13,7 @@ module Enumerable
   # does not use #each. You'll need to remember the yield statement. Make sure
   # it returns the same thing as #each as well.
   def my_each
+    return to_enum unless block_given?
     i = 0
     array = []
     while i < size
@@ -25,6 +26,7 @@ module Enumerable
 
   # 4. Create #my_each_with_index in the same way.
   def my_each_with_index
+    return to_enum unless block_given?
     i = 0
     array = []
     while i < size
@@ -38,6 +40,7 @@ module Enumerable
   # 5. Create #my_select in the same way, though you may use #my_each in your
   # definition (but not #each).
   def my_select
+    return to_enum unless block_given?
     array = []
     to_a.my_each { |n| array.push(n) if yield(n) }
     array
@@ -122,6 +125,10 @@ puts "\narray.my_each with puts in block:"
 array.my_each { |n| puts "#{n}!" }
 puts "\narray.each with puts in block:"
 array.each { |n| puts "#{n}!" }
+puts "\narray.my_each without block:"
+p array.my_each
+puts "\narray.each without block:"
+p array.each
 
 puts "\n------------------------\n"
 
@@ -133,6 +140,10 @@ puts "\narray.my_each_with_index with puts in block:"
 array.my_each_with_index { |n, i| puts "Number #{n} has index #{i}" }
 puts "\narray.each_with_index with puts in block:"
 array.each_with_index { |n, i| puts "Number #{n} has index #{i}" }
+puts "\narray.my_each_with_index without block:"
+p array.my_each_with_index
+puts "\narray.each_with_index without block:"
+p array.each_with_index
 
 puts "\n------------------------\n"
 
@@ -144,6 +155,10 @@ puts "\narray.my_select with puts in block:"
 array.my_select { |n| puts n if n.odd? }
 puts "\narray.select with puts in block:"
 array.select { |n| puts n if n.odd? }
+puts "\narray.my_select without block:"
+p array.my_select
+puts "\narray.select without block:"
+p array.select
 
 puts "\n------------------------\n"
 
