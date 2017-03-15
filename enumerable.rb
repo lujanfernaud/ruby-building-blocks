@@ -60,6 +60,12 @@ module Enumerable
   end
 
   # 8. Create #my_none?
+  def my_none?
+    return !my_any? { |n| yield(n) } if block_given?
+    array = []
+    my_each { |n| array.push(n) if !!n == true }
+    array.empty?
+  end
 
   # 9. Create #my_count
 
@@ -144,3 +150,14 @@ puts "\np array.my_any? without block:"
 p array.my_any?
 puts "\np array.any? without block:"
 p array.any?
+
+puts "\n------------------------\n"
+
+puts "\np array.my_none? (n < 9):"
+p array.my_none? { |n| n < 9 }
+puts "\np array.none? (n < 9):"
+p array.none? { |n| n < 9 }
+puts "\np array.my_none? without block:"
+p array.my_none?
+puts "\np array.none? without block:"
+p array.none?
