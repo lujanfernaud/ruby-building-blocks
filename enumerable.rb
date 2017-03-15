@@ -16,8 +16,8 @@ module Enumerable
     i = 0
     array = []
     while i < size
-      yield self[i]
-      array << self[i]
+      yield to_a[i]
+      array << to_a[i]
       i += 1
     end
     array
@@ -28,8 +28,8 @@ module Enumerable
     i = 0
     array = []
     while i < size
-      yield self[i], i
-      array << self[i]
+      yield to_a[i], i
+      array << to_a[i]
       i += 1
     end
     array
@@ -39,7 +39,7 @@ module Enumerable
   # definition (but not #each).
   def my_select
     array = []
-    my_each { |n| array.push(n) if yield(n) }
+    to_a.my_each { |n| array.push(n) if yield(n) }
     array
   end
 
@@ -47,7 +47,7 @@ module Enumerable
   def my_all?
     return my_all? { |n| n } unless block_given?
     array = []
-    my_each { |n| array.push(n) if yield(n) }
+    to_a.my_each { |n| array.push(n) if yield(n) }
     array.size == size
   end
 
@@ -55,7 +55,7 @@ module Enumerable
   def my_any?
     return my_any? { |n| n } unless block_given?
     array = []
-    my_each { |n| array.push(n) if yield(n) }
+    to_a.my_each { |n| array.push(n) if yield(n) }
     !array.empty?
   end
 
@@ -63,7 +63,7 @@ module Enumerable
   def my_none?
     return !my_any? { |n| yield(n) } if block_given?
     array = []
-    my_each { |n| array.push(n) if !!n == true }
+    to_a.my_each { |n| array.push(n) if !!n == true }
     array.empty?
   end
 
@@ -72,9 +72,9 @@ module Enumerable
     return size if item == false && !block_given?
     array = []
     if item
-      my_each { |n| array.push(n) if n == item }
+      to_a.my_each { |n| array.push(n) if n == item }
     else
-      my_each { |n| array.push(n) if yield(n) }
+      to_a.my_each { |n| array.push(n) if yield(n) }
     end
     array.size
   end
