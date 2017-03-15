@@ -80,6 +80,12 @@ module Enumerable
   end
 
   # 10. Create #my_map
+  def my_map
+    return to_enum unless block_given?
+    array = []
+    to_a.my_each { |n| array.push(yield n) }
+    array
+  end
 
   # 11. Create #my_inject
 
@@ -186,3 +192,14 @@ puts "\np array.my_count without block:"
 p array.my_count
 puts "\np array.count without block:"
 p array.count
+
+puts "\n------------------------\n"
+
+puts "\np array.my_map (n if n < 9):"
+p array.my_map { |n| n if n < 9 }
+puts "\np array.map (n if n < 9):"
+p array.map { |n| n if n < 9 }
+puts "\np array.my_map without block:"
+p array.my_map
+puts "\np array.map without block:"
+p array.map
