@@ -45,8 +45,10 @@ module Enumerable
 
   # 6. Create #my_all? (continue as above)
   def my_all?
-    return my_select { |n| yield(n) }.empty? if block_given?
-    my_all? { |n| !n }
+    return my_all? { |n| n } unless block_given?
+    array = []
+    my_each { |n| array.push(n) if yield(n) }
+    array.size == size
   end
 
   # 7. Create #my_any?
@@ -83,6 +85,7 @@ puts "#  ENUMERABLE METHODS  #"
 puts "#                      #"
 puts "########################"
 puts "\n"
+
 puts "p array.my_each:"
 p array.my_each { |n| "#{n}!" }
 puts "\np array.each:"
