@@ -52,6 +52,12 @@ module Enumerable
   end
 
   # 7. Create #my_any?
+  def my_any?
+    return my_any? { |n| n } unless block_given?
+    array = []
+    my_each { |n| array.push(n) if yield(n) }
+    !array.empty?
+  end
 
   # 8. Create #my_none?
 
@@ -119,11 +125,22 @@ array.select { |n| puts n if n.odd? }
 
 puts "\n------------------------\n"
 
-puts "\np array.my_all?:"
+puts "\np array.my_all? (n < 9):"
 p array.my_all? { |n| n < 9 }
-puts "\np array.all?:"
+puts "\np array.all? (n < 9):"
 p array.all? { |n| n < 9 }
 puts "\np array.my_all? without block:"
 p array.my_all?
 puts "\np array.all? without block:"
 p array.all?
+
+puts "\n------------------------\n"
+
+puts "\np array.my_any? (n < 9):"
+p array.my_any? { |n| n < 9 }
+puts "\np array.any? (n < 9):"
+p array.any? { |n| n < 9 }
+puts "\np array.my_any? without block:"
+p array.my_any?
+puts "\np array.any? without block:"
+p array.any?
