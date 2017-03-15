@@ -68,6 +68,16 @@ module Enumerable
   end
 
   # 9. Create #my_count
+  def my_count(item = false)
+    return size if item == false && !block_given?
+    array = []
+    if item
+      my_each { |n| array.push(n) if n == item }
+    else
+      my_each { |n| array.push(n) if yield(n) }
+    end
+    array.size
+  end
 
   # 10. Create #my_map
 
@@ -161,3 +171,18 @@ puts "\np array.my_none? without block:"
 p array.my_none?
 puts "\np array.none? without block:"
 p array.none?
+
+puts "\n------------------------\n"
+
+puts "\np array.my_count(3):"
+p array.my_count(3)
+puts "\np array.count(3):"
+p array.count(3)
+puts "\np array.my_count (n < 9):"
+p array.my_count { |n| n < 9 }
+puts "\np array.count (n < 9):"
+p array.count { |n| n < 9 }
+puts "\np array.my_count without block:"
+p array.my_count
+puts "\np array.count without block:"
+p array.count
