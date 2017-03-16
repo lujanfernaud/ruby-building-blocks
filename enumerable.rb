@@ -8,6 +8,8 @@
 #
 # 2. Add your new methods onto the existing Enumerable module.
 
+require 'pry'
+
 module Enumerable
   # 3. Create #my_each, a method that is identical to #each but (obviously)
   # does not use #each. You'll need to remember the yield statement. Make sure
@@ -91,6 +93,41 @@ module Enumerable
   end
 
   # 11. Create #my_inject
+  def my_inject(accumulator = nil, operator = false)
+    if block_given?
+      accumulator ||= first
+      my_each_with_index do |n, index|
+        next if index.zero? && n == accumulator
+        accumulator = yield(accumulator, n)
+      end
+    else
+      raise LocalJumpError, "no block given" if accumulator == nil && operator == false
+      # If the method has been called only with one parameter
+      # then the operator has been saved in the accumulator.
+      if operator == false
+        raise TypeError, "#{accumulator} is not a symbol nor a string" if accumulator.is_a?(Integer)
+        operator = accumulator.to_sym
+        accumulator = first
+      end
+
+      my_each_with_index do |n, index|
+        next if index.zero? && n == accumulator
+        case operator
+        when :+  then accumulator  += n
+        when :-  then accumulator  -= n
+        when :*  then accumulator  *= n
+        when :** then accumulator **= n
+        when :/  then accumulator  /= n
+        when :%  then accumulator  %= n
+        when :<< then accumulator <<= n
+        when :>> then accumulator >>= n
+        when :&  then accumulator  &= n
+        when :|  then accumulator  |= n
+        end
+      end
+    end
+    accumulator
+  end
 
   # 12. Test your #my_inject by creating a method called #multiply_els which
   # multiplies all the elements of the array together by using #my_inject,
@@ -218,3 +255,26 @@ puts "\np array.my_map without block:"
 p array.my_map
 puts "\np array.map without block:"
 p array.map
+
+puts "\n------------------------\n"
+
+puts "\narray.my_inject (sum + n):"
+p array.my_inject { |sum, n| sum + n }
+puts "\narray.inject (sum + n):"
+p array.inject { |sum, n| sum + n }
+puts "\narray.my_inject(9) (sum + n):"
+p array.my_inject(9) { |sum, n| sum + n }
+puts "\narray.inject(9) (sum + n):"
+p array.inject(9) { |sum, n| sum + n }
+puts "\narray.my_inject(:*):"
+p array.my_inject(:*)
+puts "\narray.inject(:*):"
+p array.inject(:*)
+puts "\narray.my_inject(3, :*):"
+p array.my_inject(3, :*)
+puts "\narray.inject(3, :*):"
+p array.inject(3, :*)
+puts "\narray.my_inject('<<'):"
+p array.my_inject("<<")
+puts "\narray.inject('<<'):"
+p array.inject("<<")
