@@ -8,8 +8,6 @@
 #
 # 2. Add your new methods onto the existing Enumerable module.
 
-require 'pry'
-
 module Enumerable
   # 3. Create #my_each, a method that is identical to #each but (obviously)
   # does not use #each. You'll need to remember the yield statement. Make sure
@@ -44,7 +42,7 @@ module Enumerable
   def my_select
     return to_enum unless block_given?
     array = []
-    to_a.my_each { |n| array.push(n) if yield(n) }
+    to_a.my_each { |n| array << n if yield(n) }
     array
   end
 
@@ -52,7 +50,7 @@ module Enumerable
   def my_all?
     return my_all? { |n| n } unless block_given?
     array = []
-    to_a.my_each { |n| array.push(n) if yield(n) }
+    to_a.my_each { |n| array << n if yield(n) }
     array.size == size
   end
 
@@ -60,7 +58,7 @@ module Enumerable
   def my_any?
     return my_any? { |n| n } unless block_given?
     array = []
-    to_a.my_each { |n| array.push(n) if yield(n) }
+    to_a.my_each { |n| array << n if yield(n) }
     !array.empty?
   end
 
@@ -68,7 +66,7 @@ module Enumerable
   def my_none?
     return !my_any? { |n| yield(n) } if block_given?
     array = []
-    to_a.my_each { |n| array.push(n) if !!n == true }
+    to_a.my_each { |n| array << n if !!n == true }
     array.empty?
   end
 
@@ -77,9 +75,9 @@ module Enumerable
     return size if item == false && !block_given?
     array = []
     if item
-      to_a.my_each { |n| array.push(n) if n == item }
+      to_a.my_each { |n| array << n if n == item }
     else
-      to_a.my_each { |n| array.push(n) if yield(n) }
+      to_a.my_each { |n| array << n if yield(n) }
     end
     array.size
   end
@@ -88,7 +86,7 @@ module Enumerable
   def my_map
     return to_enum unless block_given?
     array = []
-    to_a.my_each { |n| array.push(yield n) }
+    to_a.my_each { |n| array << yield(n) }
     array
   end
 
@@ -151,142 +149,165 @@ puts "#                      #"
 puts "########################"
 puts "\n"
 
-puts "p array.my_each:"
+puts "------------------------"
+puts "1. #my_each"
+puts "------------------------\n"
+
+puts "\np array.my_each"
 p array.my_each { |n| "#{n}!" }
-puts "\np array.each:"
+puts "\np array.each"
 p array.each { |n| "#{n}!" }
-puts "\narray.my_each with puts in block:"
+puts "\narray.my_each (with puts in block)"
 array.my_each { |n| puts "#{n}!" }
-puts "\narray.each with puts in block:"
+puts "\narray.each (with puts in block)"
 array.each { |n| puts "#{n}!" }
-puts "\narray.my_each without block:"
+puts "\np array.my_each (without block)"
 p array.my_each
-puts "\narray.each without block:"
+puts "\np array.each (without block)"
 p array.each
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "2. #my_each_with_index"
+puts "------------------------\n"
 
-puts "\np array.my_each_with_index:"
+puts "\np array.my_each_with_index"
 p array.my_each_with_index { |n, i| "Number #{n} has index #{i}" }
-puts "\np array.each_with_index:"
+puts "\np array.each_with_index"
 p array.each_with_index { |n, i| "Number #{n} has index #{i}" }
-puts "\narray.my_each_with_index with puts in block:"
+puts "\narray.my_each_with_index (with puts in block)"
 array.my_each_with_index { |n, i| puts "Number #{n} has index #{i}" }
-puts "\narray.each_with_index with puts in block:"
+puts "\narray.each_with_index (with puts in block)"
 array.each_with_index { |n, i| puts "Number #{n} has index #{i}" }
-puts "\narray.my_each_with_index without block:"
+puts "\np array.my_each_with_index (without block)"
 p array.my_each_with_index
-puts "\narray.each_with_index without block:"
+puts "\np array.each_with_index (without block)"
 p array.each_with_index
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "3. #my_select"
+puts "------------------------\n"
 
-puts "\np array.my_select:"
-p array.my_select { |n| n.odd? }
-puts "\np array.select:"
-p array.select { |n| n.odd? }
-puts "\narray.my_select with puts in block:"
+puts "\np array.my_select(&:odd?)"
+p array.my_select(&:odd?)
+puts "\np array.select(&:odd?)"
+p array.select(&:odd?)
+puts "\narray.my_select (with puts in block)"
 array.my_select { |n| puts n if n.odd? }
-puts "\narray.select with puts in block:"
+puts "\narray.select (with puts in block)"
 array.select { |n| puts n if n.odd? }
-puts "\narray.my_select without block:"
+puts "\np array.my_select (without block)"
 p array.my_select
-puts "\narray.select without block:"
+puts "\np array.select (without block)"
 p array.select
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "4. #my_all?"
+puts "------------------------\n"
 
-puts "\np array.my_all? (n < 9):"
+puts "\np array.my_all? { |n| n < 9 }"
 p array.my_all? { |n| n < 9 }
-puts "\np array.all? (n < 9):"
+puts "\np array.all? { |n| n < 9 }"
 p array.all? { |n| n < 9 }
-puts "\np array.my_all? without block:"
+puts "\np array.my_all? (without block)"
 p array.my_all?
-puts "\np array.all? without block:"
+puts "\np array.all? (without block)"
 p array.all?
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "5. #my_any?"
+puts "------------------------\n"
 
-puts "\np array.my_any? (n < 9):"
+puts "\np array.my_any? { |n| n < 9 }"
 p array.my_any? { |n| n < 9 }
-puts "\np array.any? (n < 9):"
+puts "\np array.any? { |n| n < 9 }"
 p array.any? { |n| n < 9 }
-puts "\np array.my_any? without block:"
+puts "\np array.my_any? (without block)"
 p array.my_any?
-puts "\np array.any? without block:"
+puts "\np array.any? (without block)"
 p array.any?
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "6. #my_none?"
+puts "------------------------\n"
 
-puts "\np array.my_none? (n < 9):"
+puts "\np array.my_none? { |n| n < 9 }"
 p array.my_none? { |n| n < 9 }
-puts "\np array.none? (n < 9):"
+puts "\np array.none? { |n| n < 9 }"
 p array.none? { |n| n < 9 }
-puts "\np array.my_none? without block:"
+puts "\np array.my_none? (without block)"
 p array.my_none?
-puts "\np array.none? without block:"
+puts "\np array.none? (without block)"
 p array.none?
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "7. #my_count"
+puts "------------------------\n"
 
-puts "\np array.my_count(3):"
+puts "\np array.my_count(3)"
 p array.my_count(3)
-puts "\np array.count(3):"
+puts "\np array.count(3)"
 p array.count(3)
-puts "\np array.my_count (n < 9):"
+puts "\np array.my_count { |n| n < 9 }"
 p array.my_count { |n| n < 9 }
-puts "\np array.count (n < 9):"
+puts "\np array.count { |n| n < 9 }"
 p array.count { |n| n < 9 }
-puts "\np array.my_count without block:"
+puts "\np array.my_count (without block)"
 p array.my_count
-puts "\np array.count without block:"
+puts "\np array.count (without block)"
 p array.count
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "8. #my_map"
+puts "------------------------\n"
 
-puts "\np array.my_map (n if n < 9):"
+puts "\np array.my_map { |n| n if n < 9 }"
 p array.my_map { |n| n if n < 9 }
-puts "\np array.map (n if n < 9):"
+puts "\np array.map { |n| n if n < 9 }"
 p array.map { |n| n if n < 9 }
-puts "\np array.my_map without block:"
+puts "\np array.my_map (without block)"
 p array.my_map
-puts "\np array.map without block:"
+puts "\np array.map (without block)"
 p array.map
 
 proc = proc { |n| n if n > 9 }
+puts "\nproc = proc { |n| n if n > 9 }"
 
-puts "\narray.my_map(&proc) { |n| n if n > 9 }:"
+puts "\narray.my_map(&proc)"
 p array.my_map(&proc)
-puts "\narray.map(&proc) { |n| n if n > 9 }:"
+puts "\narray.map(&proc)"
 p array.map(&proc)
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "9. #my_inject"
+puts "------------------------\n"
 
-puts "\narray.my_inject (sum + n):"
+puts "\np array.my_inject { |sum, n| sum + n }"
 p array.my_inject { |sum, n| sum + n }
-puts "\narray.inject (sum + n):"
+puts "\np array.inject { |sum, n| sum + n }"
 p array.inject { |sum, n| sum + n }
-puts "\narray.my_inject(9) (sum + n):"
+puts "\np array.my_inject(9) { |sum, n| sum + n }"
 p array.my_inject(9) { |sum, n| sum + n }
-puts "\narray.inject(9) (sum + n):"
+puts "\np array.inject(9) { |sum, n| sum + n }"
 p array.inject(9) { |sum, n| sum + n }
-puts "\narray.my_inject(:*):"
+puts "\np array.my_inject(:*)"
 p array.my_inject(:*)
-puts "\narray.inject(:*):"
+puts "\np array.inject(:*)"
 p array.inject(:*)
-puts "\narray.my_inject(3, :*):"
+puts "\np array.my_inject(3, :*)"
 p array.my_inject(3, :*)
-puts "\narray.inject(3, :*):"
+puts "\np array.inject(3, :*)"
 p array.inject(3, :*)
-puts "\narray.my_inject('<<'):"
+puts "\np array.my_inject('<<')"
 p array.my_inject("<<")
-puts "\narray.inject('<<'):"
+puts "\np array.inject('<<')"
 p array.inject("<<")
 
-puts "\n------------------------\n"
+puts "\n------------------------"
+puts "10. #multiply_els"
+puts "------------------------\n"
 
-puts "\narray.multiply_els:"
+puts "\np array.multiply_els"
 p array.multiply_els
-puts "\nmultiply_els([2, 4, 5]):"
+puts "\np multiply_els([2, 4, 5])"
 p multiply_els([2, 4, 5])
 puts "\n"
