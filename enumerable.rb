@@ -132,6 +132,9 @@ module Enumerable
   # 12. Test your #my_inject by creating a method called #multiply_els which
   # multiplies all the elements of the array together by using #my_inject,
   # e.g. multiply_els([2,4,5]) #=> 40
+  def multiply_els(_array = false)
+    my_inject(:*)
+  end
 
   # 13. Modify your #my_map method to take a proc instead.
 
@@ -142,6 +145,13 @@ module Enumerable
   # clearer, since the user doesn't have to remember whether the proc or block
   # will be run first. So if both a proc and a block are given, only execute
   # the proc.
+end
+
+# 12. Test your #my_inject by creating a method called #multiply_els which
+# multiplies all the elements of the array together by using #my_inject,
+# e.g. multiply_els([2,4,5]) #=> 40
+def multiply_els(array)
+  array.my_inject(:*)
 end
 
 array = [1, 3, 5, 6, 7, 9, 14, 21]
@@ -278,3 +288,10 @@ puts "\narray.my_inject('<<'):"
 p array.my_inject("<<")
 puts "\narray.inject('<<'):"
 p array.inject("<<")
+
+puts "\n------------------------\n"
+
+puts "\narray.multiply_els:"
+p array.multiply_els
+puts "\nmultiply_els([2, 4, 5]):"
+p multiply_els([2, 4, 5])
