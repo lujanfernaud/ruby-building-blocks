@@ -33,6 +33,7 @@ def bubble_sort(array)
       print_output(array, index)
     end
   end
+  array
 end
 
 def bubble_sort_by(array)
@@ -54,6 +55,7 @@ def bubble_sort_by(array)
       print_output(array, index)
     end
   end
+  array
 end
 
 def print_output(array, a_index)
@@ -81,4 +83,4 @@ end
 # bubble_sort_by(["hi", "hello", "hey"]) { |a, b| a.length - b.length }
 # => ["hi", "hey", "hello"]
 
-bubble_sort_by(random_list) { |a, b| a < b }
+# bubble_sort_by(random_list) { |a, b| a < b }
