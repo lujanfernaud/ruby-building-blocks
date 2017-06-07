@@ -17,11 +17,6 @@ def caesar_cipher(string, shift_factor)
     new_string << new_character.chr
   end
 
-  # Uncomment the puts statement and remove the return to new_string
-  # to play with it in the terminal.
-
-  # puts new_string
-
   new_string
 end
 
@@ -41,7 +36,9 @@ def find_new_character(character_array, character, shift_factor)
   character_array_rotated[character_position]
 end
 
+#
 # Uncomment the following lines to play with it in the terminal.
+#
 
 # user_says = "yes"
 
@@ -63,7 +60,7 @@ end
 
 #     puts "\n"
 #     puts "-" * user_text.length
-#     caesar_cipher(user_text, user_shift)
+#     puts caesar_cipher(user_text, user_shift)
 #     puts "-" * user_text.length
 
 #     puts "\n"
